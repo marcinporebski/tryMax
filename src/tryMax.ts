@@ -3,12 +3,12 @@ import { MaybeAsyncFunction } from './interfaces';
 import { oneSecond } from './consts';
 import { retryAlways } from './retryPolicies';
 
-export function tryMax(
+export function tryMax<T extends MaybeAsyncFunction>(
   numberOfRetries: number,
-  func: MaybeAsyncFunction,
+  func: T,
   delay = oneSecond,
   retryCondition: MaybeAsyncFunction = retryAlways
-): MaybeAsyncFunction {
-  return (...args) =>
-    tryMaxExecutor(numberOfRetries, () => func(...args), delay, retryCondition);
+): typeof func {
+  return ((...args) =>
+    tryMaxExecutor(numberOfRetries, () => func(...args), delay, retryCondition)) as T;
 }

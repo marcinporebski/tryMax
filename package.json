@@ -1,6 +1,6 @@
 {
   "name": "trymax",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Retry a promise if it fails, try max N times, retry conditionally, exponential back-off.",
   "repository": {
     "type": "git",
@@ -24,6 +24,8 @@
   "keywords": [
     "promise",
     "retry",
+    "async",
+    "typescript",
     "tryMax"
   ],
   "author": "Marcin Porębski",
