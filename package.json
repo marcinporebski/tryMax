@@ -1,0 +1,54 @@
+{
+  "name": "trymax",
+  "version": "0.0.1",
+  "description": "Retry a promise if it fails, try max N times, retry conditionally, exponential back-off.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marcinporebski/tryMax.git"
+  },
+  "main": "index.js",
+  "types": "./build/index.d.ts",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "build": "npm run test && tsc -t es2015 src/index.ts --module commonjs -d -outDir build",
+    "test": "npm run syntaxCheck && npm run lint && jest",
+    "test:coverage": "jest --noStackTrace --collectCoverage --no-cache",
+    "lint": "tslint -c tslint.json 'src/**/*.ts' 'test/**/*.ts'",
+    "syntaxCheck": "tsc --project tsconfig.json --noEmit",
+    "format": "prettier --config prettierrc.json --write './**/*.ts'"
+  },
+  "keywords": [
+    "promise",
+    "retry",
+    "tryMax"
+  ],
+  "author": "Marcin Porębski",
+  "license": "Apache Licence 2.0",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/jest": "^21.1.1",
+    "@types/node": "^8.0.31",
+    "jest": "^21.2.1",
+    "prettier": "^1.7.0",
+    "ts-jest": "^21.0.1",
+    "tslint": "^5.7.0",
+    "tslint-config-airbnb": "^5.3.0",
+    "tslint-config-prettier": "^1.5.0",
+    "typescript": "^2.5.3"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/test/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ]
+  }
+}
