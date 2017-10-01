@@ -1,6 +1,9 @@
 tryMax
 ===
 
+[![Build Status](https://travis-ci.org/marcinporebski/tryMax.svg?branch=master)](https://travis-ci.org/marcinporebski/tryMax)
+[![Coverage Status](https://coveralls.io/repos/github/marcinporebski/tryMax/badge.svg?branch=master)](https://coveralls.io/github/marcinporebski/tryMax?branch=master)
+
 Retry a promise if it fails, try max N times, retry conditionally, exponential back-off.
 
 Installation

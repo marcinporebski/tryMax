@@ -16,7 +16,7 @@
     "prepublishOnly": "npm run build",
     "postpublish": "rm -rf build",
     "test": "npm run syntaxCheck && npm run lint && jest",
-    "test:coverage": "jest --noStackTrace --collectCoverage --no-cache",
+    "coverage": "jest --noStackTrace --collectCoverage --no-cache && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "lint": "tslint -c tslint.json 'src/**/*.ts' 'test/**/*.ts'",
     "syntaxCheck": "tsc --project tsconfig.json --noEmit",
     "format": "prettier --config prettierrc.json --write './**/*.ts'"
@@ -34,6 +34,7 @@
   "devDependencies": {
     "@types/jest": "^21.1.1",
     "@types/node": "^8.0.31",
+    "coveralls": "^3.0.0",
     "jest": "^21.2.1",
     "prettier": "^1.7.0",
     "ts-jest": "^21.0.1",
