@@ -1,6 +1,6 @@
 {
   "name": "trymax",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Retry a promise if it fails, try max N times, retry conditionally, exponential back-off.",
   "repository": {
     "type": "git",
@@ -13,6 +13,8 @@
   },
   "scripts": {
     "build": "npm run test && tsc -t es2015 src/index.ts --module commonjs -d -outDir build",
+    "prepublishOnly": "npm run build",
+    "postpublish": "rm -rf build",
     "test": "npm run syntaxCheck && npm run lint && jest",
     "test:coverage": "jest --noStackTrace --collectCoverage --no-cache",
     "lint": "tslint -c tslint.json 'src/**/*.ts' 'test/**/*.ts'",
@@ -22,6 +24,8 @@
   "keywords": [
     "promise",
     "retry",
+    "async",
+    "typescript",
     "tryMax"
   ],
   "author": "Marcin Porębski",
