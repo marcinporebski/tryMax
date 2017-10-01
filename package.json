@@ -13,6 +13,8 @@
   },
   "scripts": {
     "build": "npm run test && tsc -t es2015 src/index.ts --module commonjs -d -outDir build",
+    "prepublishOnly": "npm run build",
+    "postpublish": "rm -rf build",
     "test": "npm run syntaxCheck && npm run lint && jest",
     "test:coverage": "jest --noStackTrace --collectCoverage --no-cache",
     "lint": "tslint -c tslint.json 'src/**/*.ts' 'test/**/*.ts'",
