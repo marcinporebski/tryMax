@@ -5,7 +5,7 @@ import { retryAlways } from './retryPolicies';
 
 export const defaultOptions: Options = {
   delay: oneSecond,
-  retryCondition: retryAlways
+  retryCondition: retryAlways,
 };
 
 export function tryMax<T extends MaybeAsyncFunction>(
@@ -13,7 +13,12 @@ export function tryMax<T extends MaybeAsyncFunction>(
   func: T,
   options: Partial<Options> = defaultOptions
 ): typeof func {
-  const finalOptions = {...defaultOptions, ...options};
+  const finalOptions = { ...defaultOptions, ...options };
   return ((...args) =>
-    tryMaxExecutor(numberOfRetries, () => func(...args), finalOptions.delay, finalOptions.retryCondition)) as T;
+    tryMaxExecutor(
+      numberOfRetries,
+      () => func(...args),
+      finalOptions.delay,
+      finalOptions.retryCondition
+    )) as T;
 }

@@ -22,9 +22,9 @@ describe('tryMaxExecutor', () => {
     const testFn: () => Promise<any> = tryMax(
       5,
       () => Promise.reject('allwaysRejected'),
-      { 
+      {
         retryCondition,
-        delay: just10milliseconds
+        delay: just10milliseconds,
       }
     );
 
