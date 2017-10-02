@@ -1,3 +1,3 @@
-const all = require('./build');
+const all = require('./bin');
 
 module.exports = all;
