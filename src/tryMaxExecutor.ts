@@ -12,7 +12,7 @@ export function tryMaxExecutor(
 ): Promise<any> {
   const isFirstAttempt = () => attemptNumber === 0;
   const enoughRetries = () => attemptNumber >= numberOfRetries;
-  const isNotPromise = (result: any) => !(result instanceof Promise);
+  const isNotPromise = (result: any) => !result.then;
   const delayRetry = (delay: number) =>
     new Promise(resolve => setTimeout(resolve, delay));
 

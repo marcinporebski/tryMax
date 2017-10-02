@@ -6,7 +6,7 @@ const just10milliseconds = () => 10;
 describe('tryMax', () => {
   it('should retry function if it fails', () => {
     const fn = jest.fn(() => Promise.reject('allwaysReject'));
-    const testFn = tryMax(5, fn, {delay: just10milliseconds});
+    const testFn = tryMax(5, fn, { delay: just10milliseconds });
 
     return testFn().then(
       never => {
@@ -21,7 +21,10 @@ describe('tryMax', () => {
   it('should not retry function if the retry condition is falsy', () => {
     const fn = jest.fn(() => Promise.reject('allwaysReject'));
     const retryFn = jest.fn(retryIf(() => false));
-    const testFn = tryMax(5, fn, {delay: just10milliseconds, retryCondition: retryFn});
+    const testFn = tryMax(5, fn, {
+      delay: just10milliseconds,
+      retryCondition: retryFn,
+    });
 
     return testFn().then(
       never => {
@@ -45,7 +48,7 @@ describe('tryMax', () => {
         return Promise.reject('failure');
       }
     });
-    const testFn = tryMax(5, fn, {delay: just10milliseconds});
+    const testFn = tryMax(5, fn, { delay: just10milliseconds });
 
     return testFn().then(
       result => {
