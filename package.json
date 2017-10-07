@@ -7,12 +7,12 @@
     "url": "https://github.com/marcinporebski/tryMax.git"
   },
   "main": "index.js",
-  "types": "./build/index.d.ts",
+  "types": "./bin/index.d.ts",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "build": "npm run test && tsc -t es2015 src/index.ts --module commonjs -d -outDir build",
+    "build": "tsc -t es2015 src/index.ts --module commonjs -d -outDir bin",
     "prepublishOnly": "npm run build",
     "test": "npm run syntaxCheck && npm run lint && jest",
     "coverage": "jest --noStackTrace --collectCoverage --no-cache && cat ./coverage/lcov.info | coveralls",
