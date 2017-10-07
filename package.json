@@ -1,6 +1,6 @@
 {
   "name": "trymax",
-  "version": "0.0.4",
+  "version": "0.0.7",
   "description": "Retry a promise if it fails, try max N times, retry conditionally, exponential back-off.",
   "repository": {
     "type": "git",
