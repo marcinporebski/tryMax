@@ -17,7 +17,7 @@ npm install trymax
 API
 ---
 ```
-tryMax(numberOfRetrier: number, func: Function, options; Options): Function
+tryMax(numberOfRetrier: number, func: Function, options: Options): Function
 ```
 Returns wrapped function with interface identical to `func`.
 Options (all are optional):

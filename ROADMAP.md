@@ -18,6 +18,20 @@ Timeout support
 ---
 Retry policy support - define a policy and apply to many 
 
+0.6.0
+---
+Wrap object with the behaviour
+
+0.7.0
+---
+Extended wrapper - define which methods to wrap
+
+0.8.0
+---
+
+0.9.0
+---
+
 1.0.0
 ---
 Support of ES2017 decorators

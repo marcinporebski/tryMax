@@ -1,24 +1,32 @@
 import { tryMaxExecutor } from './tryMaxExecutor';
-import { MaybeAsyncFunction, Options } from './interfaces';
+import { tryMaxBuilder } from './tryMaxBuilder';
+import { MaybeAsyncFunction, RetryPolicy, DelayFunction } from './interfaces';
 import { oneSecond } from './consts';
 import { retryAlways } from './retryPolicies';
 
-export const defaultOptions: Options = {
+export const defaultPolicy: RetryPolicy = {
   delay: oneSecond,
   retryCondition: retryAlways,
 };
 
+export function tryMax<T extends MaybeAsyncFunction>(numberOfRetries: number, func: T): typeof func;
+export function tryMax<T extends MaybeAsyncFunction>(numberOfRetries: number, func: T, policy: Partial<RetryPolicy>): typeof func;
+export function tryMax<T extends MaybeAsyncFunction>(numberOfRetries: number): tryMaxBuilder<T>;
 export function tryMax<T extends MaybeAsyncFunction>(
   numberOfRetries: number,
-  func: T,
-  options: Partial<Options> = defaultOptions
-): typeof func {
-  const finalOptions = { ...defaultOptions, ...options };
+  func: T = null,
+  policy: Partial<RetryPolicy> = defaultPolicy
+): typeof func | tryMaxBuilder<T> {
+  if (func === null) {
+    return null as tryMaxBuilder<T>;
+  }
+
+  const finalPolicy = { ...defaultPolicy, ...policy };
   return ((...args) =>
     tryMaxExecutor(
       numberOfRetries,
       () => func(...args),
-      finalOptions.delay,
-      finalOptions.retryCondition
+      finalPolicy.delay,
+      finalPolicy.retryCondition
     )) as T;
 }
