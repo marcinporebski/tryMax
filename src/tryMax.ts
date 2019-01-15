@@ -1,5 +1,5 @@
 import { tryMaxExecutor } from './tryMaxExecutor';
-import { tryMaxBuilder, builderFactory } from './tryMaxBuilder';
+import { TryMaxBuilder, builderFactory } from './tryMaxBuilder';
 import { MaybeAsyncFunction, RetryPolicy, DelayFunction } from './interfaces';
 import { oneSecond } from './consts';
 import { retryAlways } from './retryPolicies';
@@ -20,14 +20,14 @@ export function tryMax<T extends MaybeAsyncFunction>(
 ): typeof func;
 export function tryMax<T extends MaybeAsyncFunction>(
   numberOfRetries: number
-): tryMaxBuilder<T>;
+): TryMaxBuilder<T>;
 export function tryMax<T extends MaybeAsyncFunction>(
   numberOfRetries: number,
   func: T = null,
   policy: Partial<RetryPolicy> = defaultPolicy
-): typeof func | tryMaxBuilder<T> {
+): typeof func | TryMaxBuilder<T> {
   if (func === null) {
-    return builderFactory(numberOfRetries) as tryMaxBuilder<T>;
+    return builderFactory(numberOfRetries) as TryMaxBuilder<T>;
   }
 
   const finalPolicy = { ...defaultPolicy, ...policy };

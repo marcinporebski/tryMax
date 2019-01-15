@@ -1,7 +1,7 @@
 import { MaybeAsyncFunction, RetryPolicy, DelayFunction } from './interfaces';
 import { defaultPolicy, tryMax } from './tryMax';
 
-export interface tryMaxBuilder<T extends MaybeAsyncFunction> {
+export interface TryMaxBuilder<T extends MaybeAsyncFunction> {
   of(func: T): this;
   execute: T;
 
@@ -11,7 +11,7 @@ export interface tryMaxBuilder<T extends MaybeAsyncFunction> {
   retryIf(conditioner: MaybeAsyncFunction): this;
 }
 
-export class Builder<T extends MaybeAsyncFunction> implements tryMaxBuilder<T> {
+export class Builder<T extends MaybeAsyncFunction> implements TryMaxBuilder<T> {
   protected delayFunction: DelayFunction;
   protected retryIfFunction: MaybeAsyncFunction;
 
@@ -64,6 +64,6 @@ export class Builder<T extends MaybeAsyncFunction> implements tryMaxBuilder<T> {
 export function builderFactory(numberOfRetries: number) {
   return {
     of: <T extends MaybeAsyncFunction>(func: T) =>
-      new Builder(numberOfRetries, func) as tryMaxBuilder<typeof func>,
+      new Builder(numberOfRetries, func) as TryMaxBuilder<typeof func>,
   };
 }
