@@ -44,9 +44,8 @@ describe('tryMax', () => {
       attempt = attempt + 1;
       if (attempt > 3) {
         return Promise.resolve('success');
-      } else {
-        return Promise.reject('failure');
-      }
+      } 
+      return Promise.reject('failure');
     });
     const testFn = tryMax(5, fn, { delay: just10milliseconds });
 

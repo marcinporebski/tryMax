@@ -1,6 +1,6 @@
 {
   "name": "trymax",
-  "version": "0.0.7",
+  "version": "0.1.0",
   "description": "Retry a promise if it fails, try max N times, retry conditionally, exponential back-off.",
   "repository": {
     "type": "git",
@@ -15,6 +15,7 @@
     "build": "tsc -t es2015 src/index.ts --module commonjs -d -outDir bin",
     "prepublishOnly": "npm run build",
     "test": "npm run syntaxCheck && npm run lint && jest",
+    "jest": "jest",
     "coverage": "jest --noStackTrace --collectCoverage --no-cache && cat ./coverage/lcov.info | coveralls",
     "lint": "tslint -c tslint.json 'src/**/*.ts' 'test/**/*.ts'",
     "syntaxCheck": "tsc --project tsconfig.json --noEmit",
@@ -36,11 +37,11 @@
     "coveralls": "^3.0.0",
     "jest": "^21.2.1",
     "prettier": "^1.7.0",
-    "ts-jest": "^21.0.1",
-    "tslint": "^5.7.0",
+    "ts-jest": "^23.0.1",
+    "tslint": "^5.12.0",
     "tslint-config-airbnb": "^5.3.0",
     "tslint-config-prettier": "^1.5.0",
-    "typescript": "^2.5.3"
+    "typescript": "^3.2.0"
   },
   "jest": {
     "transform": {
