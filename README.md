@@ -16,7 +16,7 @@ npm install trymax
 
 API - builder
 ---
-```
+```ts
 tryMax(numberOfRetries: number).of(func: Function).delay(d: DelayFunction).retryIf(rc: MaybeAsyncFunction).call(...)
 ```
 
@@ -24,7 +24,7 @@ tryMax(numberOfRetries: number).of(func: Function).delay(d: DelayFunction).retry
 
 API - function wrapper
 ---
-```
+```ts
 tryMax(numberOfRetrier: number, func: Function, options: Options): Function
 ```
 Returns wrapped function with interface identical to `func`.
@@ -33,7 +33,7 @@ Options (all are optional):
 - `retryCondition` - `() => boolean` defines if in this retry attempt the `func` should be executed or not, default: `retryAlways`
 
 Example:
-```
+```ts
 const { tryMax, expBackoff, retryIf } = require('trymax');
 const ws = /* websocket */
 
@@ -53,7 +53,7 @@ Usage
 
 See this artificial example with a function that will fail always the first two times:
 
-```
+```ts
 let counter = 0;
 const fail2Times = input => {
   counter++;
@@ -67,7 +67,7 @@ const fail2Times = input => {
 
 Now if you use `tryMax` wrapper you can call this function without worying about those failed attempts:
 
-```
+```ts
 const { tryMax } = require('trymax');
 const fail2TimesAssured = tryMax(3, fail2Times);
 const result = await fail2TimesAssured('hello!');
@@ -84,7 +84,7 @@ hello!
 Use-cases
 ---
 __Try-catch-like retry block__
-```
+```ts
 tryMax(5, async () => {
   // some code that may fail 
   // and you want to auto-retry it at most 5 times
@@ -93,13 +93,13 @@ tryMax(5, async () => {
 __External services__
 
 Assuming that we have a `service` that is an external thing - accesible through REST or websockets, that sometimes fails to return a response:
-```
+```ts
 const getLatestUpdates = tryMax(5, service.getLatestUpdates);
 const latestUpdates = await getLatestUpdates();
 ```
 Or if sometimes it requires re-authentication - obtaining another api-key (if it has time-to-live), then we can check if the connection is still alive:
 
-```
+```ts
 const getLatestUpdates = tryMax(5, service.getLatestUpdates, {retryCondition: () => (service.isConnected())});
 ...
 ```
