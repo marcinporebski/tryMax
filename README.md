@@ -4,7 +4,7 @@ tryMax
 [![Build Status](https://travis-ci.org/marcinporebski/tryMax.svg?branch=master)](https://travis-ci.org/marcinporebski/tryMax)
 [![Coverage Status](https://coveralls.io/repos/github/marcinporebski/tryMax/badge.svg?branch=master)](https://coveralls.io/github/marcinporebski/tryMax?branch=master)
 
-> Retry a promise if it fails, try max N times, retry conditionally, exponential back-off.
+> Retry function or Promise to handle transient errors.
 
 Easy to use retry behaviour for JavaScript and TypeScript.
 
@@ -14,10 +14,18 @@ Installation
 npm install trymax
 ```
 
-API
+API - builder
 ---
 ```
-tryMax(numberOfRetrier: number, func: Function, options; Options): Function
+tryMax(numberOfRetries: number).of(func: Function).delay(d: DelayFunction).retryIf(rc: MaybeAsyncFunction).call(...)
+```
+
+
+
+API - function wrapper
+---
+```
+tryMax(numberOfRetrier: number, func: Function, options: Options): Function
 ```
 Returns wrapped function with interface identical to `func`.
 Options (all are optional):
@@ -29,7 +37,7 @@ Example:
 const { tryMax, expBackoff, retryIf } = require('trymax');
 const ws = /* websocket */
 
-const sendSomething = tryMax(5, () => (sendSomethingAsync()), 
+const sendSomething = tryMax(5, sendSomethingAsync, 
       {
         delay: expBackoff, 
         retryCondition: retryIf(() => (ws.readyState === 1))

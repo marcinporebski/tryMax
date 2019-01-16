@@ -6,7 +6,7 @@ export interface DelayFunction {
   (n: number): number;
 }
 
-export interface Options {
+export interface RetryPolicy {
   delay: DelayFunction;
   retryCondition: MaybeAsyncFunction;
 }
