@@ -20,14 +20,14 @@ export function tryMax<T extends MaybeAsyncFunction>(
 ): typeof func;
 export function tryMax<T extends MaybeAsyncFunction>(
   numberOfRetries: number
-): TryMaxBuilder<T>;
+): ReturnType<typeof builderFactory>;
 export function tryMax<T extends MaybeAsyncFunction>(
   numberOfRetries: number,
   func: T = null,
   policy: Partial<RetryPolicy> = defaultPolicy
-): typeof func | TryMaxBuilder<T> {
+): typeof func | ReturnType<typeof builderFactory> {
   if (func === null) {
-    return builderFactory(numberOfRetries) as TryMaxBuilder<T>;
+    return builderFactory(numberOfRetries);
   }
 
   const finalPolicy = { ...defaultPolicy, ...policy };

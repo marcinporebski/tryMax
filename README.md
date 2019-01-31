@@ -27,24 +27,36 @@ API - function wrapper
 ```ts
 tryMax(numberOfRetrier: number, func: Function, options: Options): Function
 ```
-Returns wrapped function with interface identical to `func`.
+Returns wrapped function with interface identical to `func` - `funcArg => funcResult`.
 Options (all are optional):
 - `delay` - `(n: number) => number` defines the delay between retries, default: `oneSecond`
-- `retryCondition` - `() => boolean` defines if in this retry attempt the `func` should be executed or not, default: `retryAlways`
+- `retryCondition` - `() => boolean | funcResult` defines if in this retry attempt the `func` should be executed or not, default: `retryAlways`
+
+
+__retryCondition__
+The function of retryCondition is being executed between each attempt. If talking about REST request you can check the side-effects before
+you retry the function, if talking about database queries you can re-establish the connection in case of failure. You can also alter the
+result by responding arbitrary value (except from boolean).
+
+
 
 Example:
 ```ts
-const { tryMax, expBackoff, retryIf } = require('trymax');
-const ws = /* websocket */
+#!/usr/bin/env ts-node
+import axios from 'axios';
+import { tryMax } from 'trymax';
 
-const sendSomething = tryMax(5, sendSomethingAsync, 
-      {
-        delay: expBackoff, 
-        retryCondition: retryIf(() => (ws.readyState === 1))
-      }
-);
+const theUrl = 'http://localhost:3000';
 
-await sendSomething();
+async function main() {
+    const errorProneGet = axios.get;
+    const transientErrorSafeGet = tryMax(10, errorProneGet);
+    const resp = await transientErrorSafeGet(theUrl);
+    
+    console.log(resp.data);
+}
+
+main();
 ```
 
 Usage
@@ -90,17 +102,10 @@ tryMax(5, async () => {
   // and you want to auto-retry it at most 5 times
 })();
 ```
+
 __External services__
 
-Assuming that we have a `service` that is an external thing - accesible through REST or websockets, that sometimes fails to return a response:
-```ts
-const getLatestUpdates = tryMax(5, service.getLatestUpdates);
-const latestUpdates = await getLatestUpdates();
-```
-Or if sometimes it requires re-authentication - obtaining another api-key (if it has time-to-live), then we can check if the connection is still alive:
-
-```ts
-const getLatestUpdates = tryMax(5, service.getLatestUpdates, {retryCondition: () => (service.isConnected())});
-...
-```
+- Retrying REST requests
+- Re-establish database connection when it's broken and wait with sending query when the connection is back again
+- Improve error mitigation on frontend and retry gently actions
 
