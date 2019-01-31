@@ -52,6 +52,21 @@ export function tryMaxExecutor(
   }
 
   return retryCondition()
-    .then(retry => (retry ? func() : doNotRetry))
-    .then(res => anotherAttempt(true, res), res => anotherAttempt(false, res));
+    .then(retry => {
+      switch(true) {
+        case retry === true:
+          return func();
+        case retry === false:
+          return doNotRetry;
+        default:
+          return {return: retry};
+      }
+    })
+    .then(res => {
+      if (res.return) {
+        return res.return;
+      }
+
+      return anotherAttempt(true, res)
+    }, res => anotherAttempt(false, res));
 }
